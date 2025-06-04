@@ -2,7 +2,7 @@ pool:
   vmImage: ubuntu-latest
 
 steps:
-- task: SonarCloudPrepare@1
+- task: SonarCloudPrepare@3
   inputs:
     SonarCloud: 'SonarCloud'
     organization: 'sonarsource'
@@ -14,18 +14,8 @@ steps:
 - task: DotNetCoreCLI@2
   inputs:
     command: 'build'
-    projects: 'src/SampleSolution.sln'
+    projects: 'src/Community_141909/Community_141909.csproj"'
     arguments: '--no-incremental'
-- task: DotNetCoreCLI@2
-  inputs:
-    command: 'custom'
-    custom: 'tool'
-    arguments: 'install dotnet-coverage --global'
-- task: DotNetCoreCLI@2
-  inputs:
-    command: 'custom'
-    custom: 'coverage'
-    arguments: 'collect "dotnet test src/SampleSolution.sln" -f xml -o "coverage.xml"'
 - task: SonarCloudAnalyze@1
   inputs:
     jdkversion: 'JAVA_HOME_17_X64'
